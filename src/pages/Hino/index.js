@@ -1,11 +1,12 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
 export default function Hino({ route }){
   const navigation = useNavigation();
-  const { hino } = route.params;
+  const { hinoTitle, hinoId } = route.params;
 
-  const hinos = [
+  const HINOS = [
     "",
     "1. Eu ouço um cantar divinal,\nUm coro sublime, ideal.\nOuvi-lo é prazer sem igual:\nÓ paz! És dom de meu Deus!\n\nCORO\nPaz, paz, paz, paz,\nDom precioso dos Céus! Excelsa e dulcíssima paz,\nÉs dom do amor de meu Deus.\n\n2. Por Cristo nos veio esta paz;\nÉ bênção que nos satisfaz;\nInfinda alegria nos traz\nO excelso dom de meu Deus.\n\n3. Um dia, no belo porvir,\nAo lar perenal vou subir,\nE então hei de sempre fruir\nA eterna paz de meu Deus.",
     "1. Lá na cruz Jesus morreu,\nPor meus pecados Jesus morreu.\nQue maravilha, Senhor Jesus,\nEu O louvarei.\n\nCORO:\nAo seu nome glória\nAo seu nome glória\nQue maravilha, Senhor Jesus,\nEu O louvarei.\n\n2. Lá na cruz recebi o perdão\nPelo sangue de Jesus,\nMeu coração se encheu de paz,\nEu O louvarei\n\n3. Lá na cruz uma fonte há,\nFonte de água da vida\nLavou as minhas transgressões,\nEu O louvarei.\n\n4. Vem sem tardar à cruz do Senhor\nAli te espera o Senhor Jesus,\nLá falará o Deus do amor,\nEu O louvarei.",
@@ -261,9 +262,15 @@ export default function Hino({ route }){
   ];
 
   return(
+    <SafeAreaProvider>
+    <SafeAreaView style={styles.container} >
+      <ScrollView style={styles.scrollView}>
     <View style={styles.container}>
-      <Text> {hinos[hino]} </Text>
+      <Text style={styles.lyrics}> {HINOS[hinoId]} </Text>
     </View>
+    </ScrollView>
+    </SafeAreaView>
+    </SafeAreaProvider>
   )
 }
 
@@ -271,6 +278,11 @@ const styles = StyleSheet.create({
   container:{
     flex:1,
     justifyContent: 'center',
-    alignItems: 'center'
-  }
+    alignItems: 'center',
+    paddingVertical: 15,
+    paddingHorizontal: 20,
+  },
+  lyrics: {
+    fontSize: 20,
+  },
 })

@@ -29,7 +29,7 @@ export default function App() {
         name="Hino" 
         component={Hino} 
         options={({ route }) => ({
-          title: route.params.titulo,
+          title: route.params.hinoTitle,
         })}
         />
       </Stack.Navigator>
