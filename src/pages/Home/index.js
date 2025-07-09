@@ -1,23 +1,328 @@
-import React from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, Button, FlatList, TouchableOpacity, TextInput } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
-export default function Home(){
+export default function Home() {
   const navigation = useNavigation();
 
-  return(
+  const HINOS = [
+    '1. Eu ouço um cantar divinal (찬: 468)',
+    '2. Lá na cruz (찬: 182)',
+    '3. Grandioso és Tu! (찬: 40)',
+    '4. Paz, paz, que doce paz (찬: 469)',
+    '5. Rude cruz (찬: 135)',
+    '6. O melhor amigo (찬: 86)',
+    '7. Preciosa a graça de Jesus (찬: 405)',
+    '8. Glória a Deus nas alturas (찬: 125)',
+    '9. “Seguireis?”, pergunta o Mestre (찬: 519)',
+    '10. Tu és fiel, Senhor (찬: 447)',
+    '11. Deus é tão bom (내영: 55)',
+    '12. Há uma história agradável (내영: 88)',
+    '13. Porque Ele vive (내영: 135)',
+    '14. Jesus está esperando (내영: 206)',
+    '15. Na cruz (찬: 138)',
+    '16. Bela manhã (내영: 277)',
+    '17. A verdadeira paz (내영: 123)',
+    '18. Dia a dia (내영: 346)',
+    '19. Cristo tocou-me (내영: 247)',
+    '20. Aquele que deseja o amor de Deus (내영: 402)',
+    '21. Com fé do meu Senhor (내영: 345)',
+    '22. Buscai primeiro o reino de Deus (내영: 41)',
+    '23. Por que Me amou assim? (내영: 227)',
+    '24. Meu cálice transborda (내영: 202)',
+    '25. O Senhor é Aquele que te protege (Corinho)',
+    '26. Meu Deus e eu (내영: 106)',
+    '27. Jesus me remiu (내영: 21)',
+    '28. Que deves compartir (내영: 328)',
+    '29. Chuvas de bênçãos (내영: 287)',
+    '30. Aquela fortaleza de Sião (내영: 388)',
+    '31. Importa renascer (내영: 203)',
+    '32. Eu pertenço ao meu Rei (내영: 43)',
+    '33. Do santo amor de Cristo (찬: 417)',
+    '34. Satisfação (내영: 90)',
+    '35. Águas vivas (내영: 305)',
+    '36. Além do céu azul (내영: 393)',
+    '37. Não existe outro amigo (내영: 111)',
+    '38. O calvário me libertou (내영: 333)',
+    '39. Maravilhoso é o nome de Jesus (내영: 77)',
+    '40. Sem Cristo não tenho nada (내영: 142)',
+    '41. Meu Bendito Redentor (내영: 245)',
+    '42. O banquete do Senhor (내영: 184)',
+    '43. Ele é tudo para mim (내영: 266)',
+    '44. Cristo, dá-nos a Tua paz (Corinho)',
+    '45. Por Jesus desprezo o mundo (내영: 81)',
+    '46. Fixa teus olhos no Mestre (내영: 343)',
+    '47. Eu achei (내영: 257)',
+    '48. Ele é a vida da minha alma (내영: 108)',
+    '49. Há um rio cristalino (내영: 391)',
+    '50. O amor de Cristo (내영: 25)',
+    '51. Minha paz eu darei a você (내영: 152)',
+    '52. O Senhor proverá por mim (내영: 313)',
+    '53. Minha oração (내영: 296)',
+    '54. Recebi um novo coração (Corinho)',
+    '55. Renova-me (Corinho)',
+    '56. Dentro do Senhor (Corinho)',
+    '57. Ó Pai Celeste (Corinho)',
+    '58. Caiam por Terra! (Corinho)',
+    '59. Maravilhoso És (Corinho)',
+    '60. A alegria está no coração (Corinho)',
+    '61. A graça (Corinho)',
+    '62. Jesus, Tu És meu bom Pastor (Corinho)',
+    '63. Eis-me aqui, Senhor (Corinho)',
+    '64. Consagração (Corinho)',
+    '65. Grande é o Senhor (Corinho)',
+    '66. Meu prazer (Corinho)',
+    '67. Não há Deus maior (Corinho)',
+    '68. Romanos 8:35-39 (Corinho)',
+    '69. Canta ao Senhor (Corinho)',
+    '70. Quão gloriosa será a manhã (Esp. 492)',
+    '71. Deus está aqui (Esp.)',
+    '72. O caminho para o Céu',
+    '73. Dentro do ninho',
+    '74. Me chamou',
+    '75. Cinco virgens prudentes',
+    '76. O grande amor',
+    '77. Toc-toc-toc',
+    '78. Com a força',
+    '79. Vai-te, vai-te',
+    '80. Discípulo de Jesus',
+    '81. Leste-oeste',
+    '82. No primeiro dia',
+    '83. Cinco pães e dois peixinhos',
+    '84. Nome precioso (찬: 91)',
+    '85. Ditoso Dia (찬: 209)',
+    '86. Rei Excelso (찬: 115)',
+    '87. Mais perto (찬: 364)',
+    '88. Dá teu coração (찬: 327)',
+    '89. Castelo forte (찬: 384)',
+    '90. Jesus como guia (찬: 434)',
+    '91. Firme nas Mãos de Cristo (찬: 476)',
+    '92. A Minha Alma Deseja Ver-Te (내영: 336)',
+    '93. Morte do crente (찬: 214)',
+    '94. Confiança (찬: 389)',
+    '95. Vai buscar (내영: 173)',
+    '96. Nada falta (찬: 186)',
+    '97. Sublime Amor (찬: 404)',
+    '98. O poder do sangue (찬: 202)',
+    '99. Bendita luz (찬: 488)',
+    '100. Cristo salva (찬: 328)',
+    '101. Teus pecados (찬: 187)',
+    '102. Calvário (찬: 142)',
+    '103. Firme nas promessas (찬: 399)',
+    '104. Perto De Jesus (찬: 219)',
+    '105. Com Cristo É Céu (찬: 495)',
+    '106. Desejo da Alma (찬: 337)',
+    '107. Desejos Espirituais (찬: 511)',
+    '108. Guia-me (찬: 457)',
+    '109. Cristo me Ama (찬: 411)',
+    '110. Tal qual estou (찬: 339)',
+    '111. Deus cuidará de ti (찬: 432)',
+    '112. Nasceu o Redentor (찬: 179)',
+    '113. Vem, filho perdido (찬: 315)',
+    '114. A Cidade Santa',
+    '115. Como estou (찬: 197)',
+    '116. Só no Sangue (찬: 184)',
+    '117. Tudo entregarei (찬: 71)',
+    '118. Um Grande Amigo (찬: 88)',
+    '119. Amor Fraternal (찬: 390)',
+    '120. Salvo (찬: 476)',
+    '121. Sossegai (찬: 419)',
+    '122. Vencendo Vem Jesus (찬: 388)',
+    '123. É Jesus Quem Salva (찬: 343)',
+    '124. Bendito Cordeiro (찬: 195)',
+    '125. Só Por Jesus (찬: 235)',
+    '126. Lá no Céu (찬: 222)',
+    '127. Saudade (Corinho)',
+    '128. Pastor Divino (찬: 442)',
+    '129. Fonte de Consolação (찬: 316)',
+    '130. Manso e Suave (찬: 318)',
+    '131. Contar a Jesus (찬: 363)',
+    '132. Chamada Final (찬: 168)',
+    '133. Sou Feliz (찬: 470)',
+    '134. Noite de Paz (찬: 109)',
+    '135. Segurança (찬: 204)',
+    '136. Felicidade ao conhecê-Lo (내영: 138)',
+    '137. O Filho Pródigo (찬: 336)',
+    '138. Hora Bendita (찬: 482)',
+    '139. Ebenézer (찬: 459)',
+    '140. Cada Momento (찬: 465)',
+    '141. Cantarei de Cristo (찬: 35)',
+    '142. O Grande Amigo (찬: 487)',
+    '143. Firmeza (찬: 539)',
+    '144. Dai-nos Luz (내영: 413)',
+    '145. Amparo (찬: 276)',
+    '146. Confiar em Cristo (찬: 340)',
+    '147. Estou Seguro (찬: 458)',
+    '148. Cristo Valerá (찬: 423)',
+    '149. Sempre Firme (찬: 478)',
+    '150. Substituição (찬: 185)',
+    '151. A Voz de Jesus (찬: 499)',
+    '152. Mensagem real (찬: 270)',
+    '153. Não Sei Por Que (찬: 410)',
+    '154. Brilho Celeste (찬: 502)',
+    '155. Salvação Perfeita (내영: 209)',
+    '156. Vinde meninos (찬: 313)',
+    '157. A Mensagem Celeste (찬: 252)',
+    '158. Separação (찬: 524)',
+    '159. Resolução (찬: 349)',
+    '160. Com Jesus há Esperança (찬: 223)',
+    '161. Com Jesus (찬: 330)',
+    '162. As Promessas de Deus (찬: 122)',
+    '163. O Mundo é de meu Deus (찬: 78)',
+    '164. Confiando (찬: 342)',
+    '165. Deus tem um plano (내영: 314)',
+    '166. Soou em meio à noite azul (찬: 112)',
+    '167. Crer e Observar (찬: 377)',
+    '168. Sou Crente em Jesus (찬: 444)',
+    '169. Quem Quiser (찬: 257)',
+    '170. Junto a Ti (찬: 492)',
+    '171. Cristo, luz do mundo (찬: 89)',
+    '172. Salvador Benigno (찬: 337)',
+    '173. Natal (찬: 126)',
+    '174. Terra Feliz (찬: 291)',
+    '175. Ó meninos, estamos reunidos (찬: 190)',
+    '176. Meu Jesus Está Chamando (찬: 360)',
+    '177. Dia do Senhor (찬: 188)',
+    '178. Vim a Serviço do Meu Rei (찬: 270)',
+    '179. Senhor, Tu És a Minha Porção (내영: 130)',
+    '180. Deus guia seus filhos em paz (찬: 300)',
+    '181. Aleluia! Gratos hinos entoai (찬: 13)',
+    '182. Jesus, sempre Te amo (찬: 512)',
+    '183. Cantam Anjos Harmonias (찬: 126)',
+    '184. Oh! vinde, fiéis! (찬: 122)',
+    '185. Oh! Não Busques Ansioso (내영: 207)',
+    '186. Cristo já ressuscitou (찬: 154)',
+    '187. O Seu Deus Jeová (내영: 61)',
+    '188. Um Dia (찬: 158)',
+    '189. Tem os santos do Senhor (찬: 43)',
+    '190. O Senhor Conduz (내영: 307)',
+    '191. Em Tuas Mãos (내영: 315)',
+    '192. Além do nosso caminho (내영: 60)',
+    '193. Creio em milagres (내영: 150)',
+    '194. Oh! Que Belo Hino Deus Me Deu (내영: 38)',
+    '195. Nunca me Deixar (내영: 354)',
+    '196. Ao Teu Lado Quero Andar (내영: 144)',
+    '197. Mansão Sobre o Monte (내영: 373)',
+    '198. Sou de Jesus agora (내영: 164)',
+    '199. O Amor de Jesus (내영: 92)',
+    '200. Junto à cruz (내영: 261)',
+    '201. De um nome eu sei (내영: 75)',
+    '202. Novo canto há em meu ser (내영: 221)',
+    '203. Vitória em Cristo (내영: 215)',
+    '204. Conta-me a história de Cristo (내영: 168)',
+    '205. Até os fins dos tempos (땅끝까지 복음을)',
+    '206. Irei ao Senhor (주께 가오니)',
+    '207. Jesus me Ama (예수님 날 사랑하시니)',
+    '208. Mirai ao Senhor (내영: 349)',
+    '209. Crucificação (내영: 223)',
+    '210. Espero no Senhor (내영: 291)',
+    '211. Súplicas (내영: 290)',
+    '212. Promessa Fiel (내영: 280)',
+    '213. Eis Aqui (내영: 252)',
+    '214. Bom Jesus (내영: 160)',
+    '215. Anunciai pelas montanhas (내영: 71)',
+    '216. Minha Cruz (내영: 407)',
+    '217. Sempre Vencendo (내영: 97)',
+    '218. Tudo Ele Fez Por Mim (내영: 14)',
+    '219. Por Causa de Jesus (내영: 250)',
+    '220. O Senhor Reviveu (내영: 36)',
+    '221. Oh! alegrai-vos, filhos de Sião (찬: 155)',
+    '222. Santo! Santo! Santo! (찬: 9)',
+    '223. Luzes da Aurora (찬: 535)',
+    '224. Jesus é o melhor (찬: 102)',
+    '225. Que Grande Amigo! (찬: 98)',
+    '226. É Jesus o Salvador (찬: 252)',
+    '227. Com Cristo no Meu Coração (찬: 208)',
+    '228. Fé (Corinho)',
+    '229. Assim como a corça (Corinho)',
+    '230. Dou Graças (Corinho)',
+    '231. Nada é como Tu (Corinho)',
+    '232. As Estrelas (Corinho)',
+    '233. Orando Por Ti (Corinho)',
+    '234. Bênção de Jacó (Corinho)',
+    '235. Jesus virá na nuvem (내영: 358)',
+    '236. Senhor me Chamas (Corinho)',
+    '237. Tenho um hino em meu coração (내영: 23)',
+    '238. Conserva a Paz, ó Minha Alma (내영: 277)',
+    '239. Ao Lindo Lar Celeste (내영: 369)',
+    '240. Cristo É Tudo Para Mim (찬: 93)',
+    '241. Salvo Estás? Limpo Estás? (찬: 193)',
+    '242. De valor em valor (내영: 410)',
+    '243. Fiel Salvador é Jesus (찬: 446)',
+    '244. Maravilhosa Graça (내영: 46)',
+    '245. A Deus Demos Glória (내영: 35)',
+    '246. Da Sepultura Saiu (찬: 150)',
+    '247. Todos Devem Conhecer (내영: 153)',
+    '248. O Amor é Longânimo (내영: 149)',
+    '249. Salmos 145 (Corinho)',
+    '250. Ele É Exaltado (Corinho)',
+    '251. Permaneçais Dentro da Fé (Corinho)'
+  ];
+
+  const Item = ({ titleHino, indexHino }) => (
+    <TouchableOpacity style={styles.item} onPress={() => navigation.navigate('Hino', { hino: indexHino + 1, titulo: titleHino })} >
+      <Text style={styles.title}>{titleHino}</Text>
+    </TouchableOpacity>
+  );
+
+  const [searchText, setSearchText] = useState('');
+  const filteredData = HINOS.filter(item =>
+    item.toLowerCase().includes(searchText.toLowerCase())
+  );
+
+  return (
     <View style={styles.container}>
       <Text>Tela HOME</Text>
-      <Button title="Ir para hino" onPress={ () => navigation.navigate('Hino') } />
+
+      <TextInput
+        style={styles.input}
+        placeholder="Pesquisar..."
+        value={searchText}
+        onChangeText={text => setSearchText(text)}
+      />
+
+      <SafeAreaProvider>
+        <SafeAreaView style={styles.container}>
+          <FlatList
+            data={searchText != "" ? filteredData : HINOS}
+            renderItem={({ hino, index, }) => <Item titleHino={(searchText != "" ? filteredData : HINOS)[index]} indexHino={index} />}
+          />
+        </SafeAreaView>
+      </SafeAreaProvider>
+
     </View>
   )
 }
 
-const styles = StyleSheet.create({
-  container:{
-    flex:1,
+const styles2 = StyleSheet.create({
+  container: {
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
   }
 })
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginTop: 50,
+  },
+  item: {
+    backgroundColor: '#f9c2ff',
+    padding: 20,
+    marginVertical: 4,
+    marginHorizontal: 16,
+  },
+  title: {
+    fontSize: 15,
+  },
+  input: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    margin: 10,
+    padding: 5,
+  },
+});

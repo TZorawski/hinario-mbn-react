@@ -28,9 +28,9 @@ export default function App() {
         <Stack.Screen 
         name="Hino" 
         component={Hino} 
-        options={{
-          title:'Pagina Hino'
-        }}
+        options={({ route }) => ({
+          title: route.params.titulo,
+        })}
         />
       </Stack.Navigator>
     </NavigationContainer>
