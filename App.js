@@ -1,9 +1,10 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 import Home from './src/pages/Home';
 import Hino from './src/pages/Hino';
+import Locations from './src/pages/About';
 
 const Stack = createNativeStackNavigator();
 
@@ -30,6 +31,14 @@ export default function App() {
         component={Hino} 
         options={({ route }) => ({
           title: route.params.hinoTitle,
+        })}
+        />
+
+        <Stack.Screen 
+        name="Locations" 
+        component={Locations} 
+        options={({ route }) => ({
+          title: 'Locais',
         })}
         />
       </Stack.Navigator>
