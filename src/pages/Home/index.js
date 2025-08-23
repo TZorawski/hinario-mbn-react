@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, Button, FlatList, TouchableOpacity, TextInput, 
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
-const PRIM_COLOR = '#607d8b';
+const SEC_COLOR = '#607d8b';
 
 export default function Home() {
   const navigation = useNavigation();  
@@ -277,10 +277,6 @@ export default function Home() {
   return (
     <View style={styles.container}>
 
-      <View style={styles.infoContainer}>
-        <Button title='Info' onPress={() => navigation.navigate('Locations')} />
-      </View>
-
       <Image style={styles.logoImage} width={180} height={90} source={require('./img/logo.png')} />
 
       <View style={styles.containerSearchInput}>
@@ -312,7 +308,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: 30,
     marginHorizontal: 10,
   },
   logoImage: {
@@ -340,13 +335,9 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 50,
     fontSize: 18,
-    borderColor: PRIM_COLOR,
+    borderColor: SEC_COLOR,
     borderWidth: 1,
     padding: 12,
     paddingRight: 40,
-  },
-  infoContainer: {
-    flexDirection: 'row-reverse',
-    justifyContent: 'space-between',
   },
 });

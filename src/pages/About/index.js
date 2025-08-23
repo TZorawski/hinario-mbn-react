@@ -18,9 +18,6 @@ export default function Locations() {
     { city: 'Curitiba', uf: 'PR', address: 'Rua Colombo, 704 - Bairro Ahú', phone: '(11) 99769-0269', responsible: 'Miss. Júlio Han' },
   ]
 
-  const color = 'rgb(179,179,179)';
-  const color2 = '#607d8b';
-
   const ListItem = ({locationItem}) => (
     <View style={styles.listItem} >
       <Text style={styles.titleItem}>{locationItem.city} - {locationItem.uf}</Text>
@@ -52,7 +49,6 @@ const styles = StyleSheet.create({
     //alignItems: 'center',
   },
   listItem: {
-    //backgroundColor: '#cfd8dc',
     backgroundColor: '#fdfdfd',
     justifyContent: 'space-around',
     alignItems: 'flex-start',
@@ -64,7 +60,6 @@ const styles = StyleSheet.create({
   titleItem: {
     fontSize: 22,
     fontWeight: 400,
-    //backgroundColor: 'pink',
     width: '100%',
     textAlign: 'center',
     marginBottom: 8
