@@ -2,9 +2,8 @@ import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
-export default function Hino({ route }){
-  const navigation = useNavigation();
-  const { hinoTitle, hinoId } = route.params;
+export default function Hino({ route }) {
+  const { hinoId } = route.params;
 
   const HINOS = [
     "",
@@ -261,22 +260,23 @@ export default function Hino({ route }){
     "1.Nós que estamos juntos aqui,\nRecebemos o amor de Deus.\nO Senhor aqui está! Conosco, neste lugar!\nSeguiremos ao Senhor, louvando a Ele só.\nO Senhor aqui está, mesmo em nossas tentações.\n\nCORO:\nPermaneçais dentro da fé,\nO Senhor protegerá.\nNuma noite escura o Senhor irá\nNos guiar com a sua luz.\n\n2.Nós que estamos juntos aqui,\nSomos filhos do amor de Deus.\nA vontade do Senhor se cumprirá através de nós.\nSeguiremos ao Senhor, louvando à Ele só.\nO Senhor aqui está, mesmo em nossas tentações.\n"
   ];
 
-  return(
+  return (
     <SafeAreaProvider>
-    <SafeAreaView style={styles.container} >
-      <ScrollView style={styles.scrollView}>
-    <View style={styles.container}>
-      <Text style={styles.lyrics}> {HINOS[hinoId]} </Text>
-    </View>
-    </ScrollView>
-    </SafeAreaView>
+      <SafeAreaView style={styles.container} >
+        <ScrollView style={styles.scrollView}>
+          <View style={styles.container}>
+            <Text style={styles.lyrics}> {HINOS[hinoId]} </Text>
+          </View>
+        </ScrollView>
+      </SafeAreaView>
     </SafeAreaProvider>
   )
 }
 
 const styles = StyleSheet.create({
-  container:{
-    flex:1,
+  container: {
+    backgroundColor: '#eceff1',
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: 15,

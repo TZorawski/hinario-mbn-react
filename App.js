@@ -11,18 +11,23 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator
+        screenOptions={{
+        headerStyle: {
+          backgroundColor: '#607d8b',
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+      }}
+      >
         <Stack.Screen 
         name="Home" 
         component={Home} 
         options={{
-          title: 'Tela inicio',
-          headerStyle:{
-            backgroundColor: '#121212'
-          },
-
-          headerTintColor: '#fff',
-          headerShown: false,
+          title: 'Hinário MBN',
+          //headerShown: false,
         }}
         />
 

@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Button, FlatList, TouchableOpacity, TextInput } from 'react-native';
+import { View, Text, StyleSheet, Button, FlatList, TouchableOpacity, TextInput, Image } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
+const PRIM_COLOR = '#607d8b';
+
 export default function Home() {
-  const navigation = useNavigation();
+  const navigation = useNavigation();  
 
   const HINOS = [
     { id: '1', title: '1. Eu ouço um cantar divinal (찬: 468)' },
@@ -262,8 +264,8 @@ export default function Home() {
   ];
 
   const Item = ({ hinoTitle, hinoId }) => (
-    <TouchableOpacity style={styles.item} onPress={() => navigation.navigate('Hino', { hinoId: hinoId, hinoTitle: hinoTitle })} >
-      <Text style={styles.title}>{hinoTitle}</Text>
+    <TouchableOpacity style={styles.containerItem} onPress={() => navigation.navigate('Hino', { hinoId: hinoId, hinoTitle: hinoTitle })} >
+      <Text style={styles.titleItem}>{hinoTitle}</Text>
     </TouchableOpacity>
   );
 
@@ -279,17 +281,20 @@ export default function Home() {
         <Button title='Info' onPress={() => navigation.navigate('Locations')} />
       </View>
 
-      <Text>Tela HOME</Text>
+      <Image style={styles.logoImage} width={180} height={90} source={require('./img/logo.png')} />
 
-      <TextInput
-        style={styles.input}
-        placeholder="Pesquisar..."
-        value={searchText}
-        onChangeText={text => setSearchText(text)}
-      />
+      <View style={styles.containerSearchInput}>
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Pesquisar..."
+          value={searchText}
+          onChangeText={text => setSearchText(text)}
+        />
+        <Image style={styles.imageSearchInput} source={require('./img/search.png')} />
+      </View>
 
       <SafeAreaProvider>
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView>
           <FlatList
             data={searchText !== "" ? filteredData : HINOS}
             renderItem={({ item }) => <Item hinoTitle={item.title} hinoId={item.id} />}
@@ -301,34 +306,44 @@ export default function Home() {
   )
 }
 
-const styles2 = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  }
-})
-
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: '#eceff1',
     flex: 1,
-    marginTop: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: 30,
+    marginHorizontal: 10,
   },
-  item: {
-    backgroundColor: '#f9c2ff',
-    padding: 20,
+  logoImage: {
+    margin: 20,
+  },
+  containerItem: {
+    backgroundColor: '#fdfdfd',
+    padding: 18,
     marginVertical: 4,
-    marginHorizontal: 16,
   },
-  title: {
-    fontSize: 15,
+  titleItem: {
+    fontSize: 18,
   },
-  input: {
-    height: 40,
-    borderColor: 'gray',
+  containerSearchInput: {
+    flexDirection: 'row',
+    marginBottom: 10,
+  },
+  imageSearchInput: {
+    position: 'absolute',
+    right: 10,
+    top: 12,
+  },
+  searchInput: {
+    backgroundColor: '#fdfdfd',
+    flex: 1,
+    height: 50,
+    fontSize: 18,
+    borderColor: PRIM_COLOR,
     borderWidth: 1,
-    margin: 10,
-    padding: 5,
+    padding: 12,
+    paddingRight: 40,
   },
   infoContainer: {
     flexDirection: 'row-reverse',
