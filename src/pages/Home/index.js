@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, Button, FlatList, TouchableOpacity, TextInput, Image } from 'react-native';
+import { useState } from 'react';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, TextInput, Image } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-
-const SEC_COLOR = '#607d8b';
+import { COLORS } from '../../constants/colors';
 
 export default function Home() {
   const navigation = useNavigation();  
@@ -304,7 +303,7 @@ export default function Home() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#eceff1',
+    backgroundColor: COLORS.background,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -314,7 +313,7 @@ const styles = StyleSheet.create({
     margin: 20,
   },
   containerItem: {
-    backgroundColor: '#fdfdfd',
+    backgroundColor: COLORS.cards,
     padding: 18,
     marginVertical: 4,
   },
@@ -331,11 +330,11 @@ const styles = StyleSheet.create({
     top: 12,
   },
   searchInput: {
-    backgroundColor: '#fdfdfd',
+    backgroundColor: COLORS.cards,
     flex: 1,
     height: 50,
     fontSize: 18,
-    borderColor: SEC_COLOR,
+    borderColor: COLORS.secondary,
     borderWidth: 1,
     padding: 12,
     paddingRight: 40,

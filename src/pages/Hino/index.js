@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { COLORS } from '../../constants/colors';
 
 export default function Hino({ route }) {
   const { hinoId } = route.params;
@@ -275,7 +275,7 @@ export default function Hino({ route }) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#eceff1',
+    backgroundColor:COLORS.background,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
