@@ -288,7 +288,7 @@ export default function Home() {
         <Image style={styles.imageSearchInput} source={require('./img/search.png')} />
       </View>
 
-      <SafeAreaProvider>
+      <SafeAreaProvider style={styles.containerFlatList}>
         <SafeAreaView>
           <FlatList
             data={searchText !== "" ? filteredData : HINOS}
@@ -311,6 +311,9 @@ const styles = StyleSheet.create({
   },
   logoImage: {
     margin: 20,
+  },
+  containerFlatList: {
+    width: '100%',
   },
   containerItem: {
     backgroundColor: COLORS.cards,
