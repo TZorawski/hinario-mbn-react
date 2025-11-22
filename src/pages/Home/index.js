@@ -6,7 +6,7 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { COLORS } from '../../constants/colors';
 
 export default function Home() {
-  const navigation = useNavigation();  
+  const navigation = useNavigation();
 
   const HINOS = [
     { id: '1', title: '1. Eu ouço um cantar divinal (찬: 468)' },
@@ -260,7 +260,16 @@ export default function Home() {
     { id: '249', title: '249. Salmos 145 (Corinho)' },
     { id: '250', title: '250. Ele É Exaltado (Corinho)' },
     { id: '251', title: '251. Permaneçais Dentro da Fé (Corinho)' },
-  ];
+  ].map(item => {
+    const styledTitle = item.title
+      .split(" ")
+      .map(word =>
+        word.charAt(0).toUpperCase() + word.slice(1)
+      )
+      .join(" ");
+
+    return { ...item, title: styledTitle };
+  });
 
   const Item = ({ hinoTitle, hinoId }) => (
     <TouchableOpacity style={styles.containerItem} onPress={() => navigation.navigate('Hino', { hinoId: hinoId, hinoTitle: hinoTitle })} >
