@@ -6,12 +6,12 @@ export default function Locations() {
 
   const LOCATIONS_LIST = [
     { city: 'São Paulo (SEDE)', uf: 'SP', address: 'Av. Imirim, 2496 - Bairro Imirim', phone: '(11) 2256-0914', responsible: 'Pr. José Kim (Beom Seop Kim)' },
-    { city: 'Guarulhos', uf: 'SP', address: 'Rua Pará, 78 - Jardim Santa Barbara', phone: '(11) 97055-4160', responsible: 'Pr. Davi Lee' },
+    { city: 'Guarulhos', uf: 'SP', address: 'Rua Claudino Barbosa 132, Macedo', phone: '(11) 97495-2244', responsible: 'Pr. Diego Kim' },
     { city: 'Caraguatatuba', uf: 'SP', address: 'Av. Antonio Francisco Pascoal Peliciari, 957 - Bairro Canta Galo', phone: ' (11) 96183-8520', responsible: 'Pr. Willy Aguilera' },
     { city: 'Porto Alegre', uf: 'RS', address: 'Av. Antônio de Carvalho, 2059 - Jardim Carvalho', phone: '(51) 98205-6702', responsible: 'Pr. Marcos Kim' },
-    { city: 'Brasilia (Taguatinga Norte)', uf: 'DF', address: 'QND 20, Casa 20', phone: '(61) 99833-3478', responsible: 'Pr. Daniel Jo' },
+    { city: 'Brasilia', uf: 'DF', address: 'QND 20, Casa 20 - Taguatinga Norte', phone: '(61) 99377-6610', responsible: 'Pr. Davi Lee' },
     { city: 'Rio de Janeiro', uf: 'RJ', address: 'Rua Augusto de Azevedo Santos, lt 03 - Campo Grande', phone: '(11) 99320-5621', responsible: 'Pr. Paulo Jung' },
-    { city: 'Teresina', uf: 'Piauí', address: 'Rua Dr.Area Leão, 2080 - Bairro Monte Castelo', phone: '(86) 99929-4233', responsible: 'Pr. Jair Belém' },
+    { city: 'Teresina', uf: 'PI', address: 'Rua Dr.Area Leão, 2080 - Bairro Monte Castelo', phone: '(86) 99929-4233', responsible: 'Pr. Jair Belém' },
     { city: 'Belo Horizonte', uf: 'MG', address: 'Rua Central, 1155 - Jardim Leblon', phone: '(31) 98316-0545', responsible: 'Miss. Simeão Kim' },
     { city: 'Goiânia', uf: 'GO', address: 'R. Recife, 75 - Quadra 1, Lote 19 - St. Urias Magalhães', phone: '(62) 99236-2448', responsible: 'Pr. Isaque Kwon' },
     { city: 'Curitiba', uf: 'PR', address: 'Rua Colombo, 704 - Bairro Ahú', phone: '(11) 99769-0269', responsible: 'Miss. Júlio Han' },
