@@ -3,7 +3,7 @@
     "name": "hinario_mbn",
     "slug": "hinario_mbn",
     "version": "1.0.5",
-    "orientation": "portrait",
+    "orientation": "default",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,

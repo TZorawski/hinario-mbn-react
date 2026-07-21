@@ -1,9 +1,12 @@
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, useWindowDimensions } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { COLORS } from '../../constants/colors';
 
 export default function Hino({ route }) {
   const { hinoId } = route.params;
+  const { width, height } = useWindowDimensions();
+  const isTablet = width >= 768;
+  const isLandscape = width > height;
 
   const HINOS = [
     "",
@@ -262,10 +265,14 @@ export default function Hino({ route }) {
 
   return (
     <SafeAreaProvider>
-      <SafeAreaView style={styles.container} >
-        <ScrollView style={styles.scrollView}>
-          <View style={styles.container}>
-            <Text style={styles.lyrics}>{HINOS[hinoId]}</Text>
+      <SafeAreaView style={[styles.container, isTablet && styles.containerTablet, isLandscape && styles.containerLandscape]}>
+        <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
+          <View style={[
+            styles.contentWrapper,
+            isTablet && !isLandscape && styles.contentWrapperTabletPortrait,
+            isTablet && isLandscape && styles.contentWrapperTabletLandscape,
+          ]}>
+            <Text style={[styles.lyrics, isTablet && styles.lyricsTablet]}>{HINOS[hinoId]}</Text>
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -277,12 +284,47 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor:COLORS.background,
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingVertical: 15,
+    paddingTop: 24,
+    paddingBottom: 15,
     paddingHorizontal: 20,
   },
+  containerTablet: {
+    paddingHorizontal: 28,
+    paddingTop: 29,
+  },
+  containerLandscape: {
+    paddingHorizontal: 0,
+  },
+  scrollView: {
+    width: '100%',
+  },
+  scrollContent: {
+    alignItems: 'center',
+  },
+  contentWrapper: {
+    width: '100%',
+    maxWidth: 900,
+    alignSelf: 'center',
+    paddingHorizontal: 8,
+  },
+  contentWrapperTabletPortrait: {
+    width: '70%',
+    maxWidth: '70%',
+    alignSelf: 'center',
+  },
+  contentWrapperTabletLandscape: {
+    width: '50%',
+    maxWidth: '50%',
+    alignSelf: 'center',
+  },
   lyrics: {
+    width: '100%',
     fontSize: 20,
+    lineHeight: 30,
+    textAlign: 'left',
+  },
+  lyricsTablet: {
+    fontSize: 28,
+    lineHeight: 40,
   },
 })

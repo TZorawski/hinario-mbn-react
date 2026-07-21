@@ -1,8 +1,11 @@
-import { View, Text, StyleSheet, FlatList } from 'react-native';
+import { View, Text, StyleSheet, FlatList, useWindowDimensions } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { COLORS } from '../../constants/colors';
 
 export default function Locations() {
+  const { width, height } = useWindowDimensions();
+  const isTablet = width >= 768;
+  const isLandscape = width > height;
 
   const LOCATIONS_LIST = [
     { city: 'São Paulo (SEDE)', uf: 'SP', address: 'Av. Imirim, 2496 - Bairro Imirim', phone: '(11) 2256-0914', responsible: 'Pr. José Kim (Beom Seop Kim)' },
@@ -18,7 +21,7 @@ export default function Locations() {
   ]
 
   const ListItem = ({locationItem}) => (
-    <View style={styles.listItem} >
+    <View style={[styles.listItem, isLandscape && styles.listItemLandscape]} >
       <Text style={styles.titleItem}>{locationItem.city} - {locationItem.uf}</Text>
       <Text style={styles.textItem}><Text style={styles.headerTextItem}>Endereço:</Text>{locationItem.address}</Text>
       <Text style={styles.textItem}><Text style={styles.headerTextItem}>Contato:</Text> {locationItem.phone}</Text>
@@ -30,6 +33,7 @@ export default function Locations() {
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
         <FlatList
+          contentContainerStyle={isTablet && !isLandscape ? styles.listContentTablet : undefined}
           data={LOCATIONS_LIST}
           renderItem={({ item }) => <ListItem locationItem={item} />}
         />
@@ -42,6 +46,10 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: COLORS.background,
   },
+  listContentTablet: {
+    paddingHorizontal: 16,
+    paddingBottom: 16,
+  },
   listItem: {
     backgroundColor: COLORS.cards,
     justifyContent: 'space-around',
@@ -50,6 +58,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     marginVertical: 5,
     marginHorizontal: 10,
+    borderRadius: 10,
+    maxWidth: 900,
+    alignSelf: 'center',
+    width: '100%',
+  },
+  listItemLandscape: {
+    maxWidth: '100%',
+    marginHorizontal: 0,
   },
   titleItem: {
     fontSize: 22,
