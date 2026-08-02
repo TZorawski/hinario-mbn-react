@@ -38,3 +38,5 @@ yarn-error.*
 
 # sensitive
 app.json
+android/local.properties
+local.properties

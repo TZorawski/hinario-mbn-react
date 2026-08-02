@@ -1,12 +1,15 @@
 import { useState } from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, TextInput, Image } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, TextInput, Image, useWindowDimensions } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { COLORS } from '../../constants/colors';
 
 export default function Home() {
   const navigation = useNavigation();
+  const { width, height } = useWindowDimensions();
+  const isTablet = width >= 768;
+  const isLandscape = width > height;
 
   const HINOS = [
     { id: '1', title: '1. Eu ouço um cantar divinal (찬: 468)' },
@@ -283,29 +286,40 @@ export default function Home() {
   );
 
   return (
-    <View style={styles.container}>
-
-      <Image style={styles.logoImage} width={180} height={90} source={require('./img/logo.png')} />
-
-      <View style={styles.containerSearchInput}>
-        <TextInput
-          style={styles.searchInput}
-          placeholder="Pesquisar..."
-          value={searchText}
-          onChangeText={text => setSearchText(text)}
+    <View style={[styles.container, isTablet && styles.containerTablet]}>
+      <View style={[
+        styles.contentArea,
+        isTablet && !isLandscape && styles.contentAreaTabletPortrait,
+        isLandscape && styles.contentAreaLandscape,
+      ]}>
+        <Image
+          style={[styles.logoImage, isTablet && styles.logoImageTablet]}
+          width={isTablet ? 260 : 180}
+          height={isTablet ? 130 : 90}
+          source={require('./img/logo.png')}
         />
-        <Image style={styles.imageSearchInput} source={require('./img/search.png')} />
-      </View>
 
-      <SafeAreaProvider style={styles.containerFlatList}>
-        <SafeAreaView>
+        <View style={[styles.containerSearchInput, isTablet && styles.containerSearchInputTablet, isLandscape && styles.containerSearchInputLandscape]}>
+          <TextInput
+            style={[styles.searchInput, isTablet && styles.searchInputTablet]}
+            placeholder="Pesquisar..."
+            value={searchText}
+            onChangeText={text => setSearchText(text)}
+          />
+          <Image style={styles.imageSearchInput} source={require('./img/search.png')} />
+        </View>
+
+        <SafeAreaView style={styles.containerFlatList}>
           <FlatList
+            style={styles.flatList}
+            contentContainerStyle={isTablet && !isLandscape ? styles.flatListContentTablet : styles.flatListContent}
             data={searchText !== "" ? filteredData : HINOS}
             renderItem={({ item }) => <Item hinoTitle={item.title} hinoId={item.id} />}
+            showsVerticalScrollIndicator={false}
+            keyboardShouldPersistTaps="handled"
           />
         </SafeAreaView>
-      </SafeAreaProvider>
-
+      </View>
     </View>
   )
 }
@@ -314,20 +328,51 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: COLORS.background,
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginHorizontal: 10,
+    justifyContent: 'flex-start',
+    alignItems: 'stretch',
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+  },
+  contentArea: {
+    flex: 1,
+    width: '100%',
+    maxWidth: 900,
+    alignSelf: 'center',
+  },
+  contentAreaTabletPortrait: {
+    maxWidth: '70%',
+  },
+  contentAreaLandscape: {
+    maxWidth: '60%',
+  },
+  containerTablet: {
+    paddingHorizontal: 24,
   },
   logoImage: {
-    margin: 20,
+    marginVertical: 16,
+    alignSelf: 'center',
+  },
+  logoImageTablet: {
+    marginVertical: 24,
   },
   containerFlatList: {
     width: '100%',
+    flex: 1,
+  },
+  flatList: {
+    flex: 1,
+  },
+  flatListContent: {
+    paddingBottom: 16,
+  },
+  flatListContentTablet: {
+    paddingBottom: 16,
   },
   containerItem: {
     backgroundColor: COLORS.cards,
     padding: 18,
     marginVertical: 4,
+    borderRadius: 8,
   },
   titleItem: {
     fontSize: 18,
@@ -335,6 +380,17 @@ const styles = StyleSheet.create({
   containerSearchInput: {
     flexDirection: 'row',
     marginBottom: 10,
+    alignSelf: 'stretch',
+  },
+  containerSearchInputTablet: {
+    maxWidth: 900,
+    alignSelf: 'center',
+    width: '100%',
+  },
+  containerSearchInputLandscape: {
+    maxWidth: '100%',
+    alignSelf: 'stretch',
+    width: '100%',
   },
   imageSearchInput: {
     position: 'absolute',
@@ -350,5 +406,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 12,
     paddingRight: 40,
+    borderRadius: 8,
+  },
+  searchInputTablet: {
+    fontSize: 20,
+    height: 56,
   },
 });
